@@ -1050,41 +1050,4 @@ describe("FileOperations", function () {
         );
         assert.notInclude(content, "HOSTADDRESS");
     });
-
-    it("should successfully get path for directory with pathToPrepend", function () {
-        let path = { pathToPrepend: ["test/newtest/", "test/newtest/"] };
-
-        let yamlStr = yaml.safeDump(path);
-        fs.writeFileSync(testFolder + "/config.yaml", yamlStr, "utf8");
-
-        const yamlFile = fs.readFileSync(testFolder + "/config.yaml", "utf8");
-        let config = yaml.safeLoad(yamlFile);
-        let fileOperation = new fileOperations(config);
-        let filePath = fileOperation.getPathForDir("config.yaml", true);
-        assert.include(filePath, "test/newtest/config.yaml");
-    });
-
-    it("should successfully get path for directory without pathToPrepend", function () {
-        let path = { cfg: "test/newtest" };
-        let yamlStr = yaml.safeDump(path);
-        fs.writeFileSync(testFolder + "/config.yaml", yamlStr, "utf8");
-
-        const yamlFile = fs.readFileSync(testFolder + "/config.yaml", "utf8");
-        let config = yaml.safeLoad(yamlFile);
-        let fileOperation = new fileOperations(config);
-        let filePath = fileOperation.getPathForDir("config.yaml", true);
-        assert.include(filePath, "test/newtest/config.yaml");
-    });
-
-    it("should successfully check isPortExist", function () {
-        let port = { portsToMap: ["443", "80"] };
-        let yamlStr = yaml.safeDump(port);
-        fs.writeFileSync(testFolder + "/config.yaml", yamlStr, "utf8");
-
-        const yamlFile = fs.readFileSync(testFolder + "/config.yaml", "utf8");
-        let config = yaml.safeLoad(yamlFile);
-        let fileOperation = new fileOperations(config);
-        let isPresent = fileOperation.isPortExists("443");
-        assert.isTrue(isPresent, true);
-    });
 });
